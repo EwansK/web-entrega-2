@@ -30,6 +30,12 @@ function validar_rut(rut) {
     // Validar
     return checkDigit === expectedCheckDigit;
 }
+// Validar email
+function validar_emails() {
+    const email1 = document.getElementById('email1').value;
+    const email2 = document.getElementById('email2').value;
+    return email1 === email2;
+}
 
 // Function to show the modal with the specified title and message
 function showModal(title, message) {
@@ -48,13 +54,19 @@ function mostrar_validacion_rut(event) {
     event.preventDefault(); // Prevent form submission
 
     const rutInput = document.getElementById('rut').value;
-    const result = validar_rut(rutInput);
+    const rutValido = validar_rut(rutInput);
+    const emailValido = validar_emails();
 
-    if (!result) {
+    if (!rutValido) {
         showModal('Error', 'Rut inválido');
+    } else if (!emailValido) {
+        showModal('Error', 'Los correos electrónicos no coinciden');
     } else {
         showModal('Correcto!', 'Registro completado exitosamente');
-        //document.getElementById('form').submit();
+        // Retrasar envío para mostrar el modal
+        setTimeout(() => {
+            document.getElementById('form').submit();
+        }, 2000);
     }
 }
 
